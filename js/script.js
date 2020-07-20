@@ -1,3 +1,4 @@
+
 /*****
 Job Role Dropdown
 *****/
@@ -15,6 +16,7 @@ jobRoleElement.addEventListener('change', (e) => {
 });
 
 
+
 /*****
 T-Shirt Info Section
 *****/
@@ -23,16 +25,15 @@ let designElement = document.querySelector('#design');
 let designOptions = document.querySelectorAll('#design option');
 let colorElement = document.querySelector('#color');
 let colorOptions = document.querySelectorAll('#color option');
-colorElement.hidden = true;
 
 
 const defaultMessage = document.createElement('option');
 defaultMessage.textContent = 'Please select a T-shirt theme';
 defaultMessage.selected = true;
-colorElement.prepend(defaultMessage);
+colorElement.insertBefore(defaultMessage, colorElement.firstElementChild);
 
 
-if (defaultMessage.hidden == false) {
+if (defaultMessage.hidden === false) {
   colorElement.hidden = false;
   for (let i = 0; i < colorOptions.length; i++) {
   	defaultMessage.hidden = true;
@@ -42,21 +43,101 @@ if (defaultMessage.hidden == false) {
 
 
 designElement.addEventListener('change', (e) => {
-	if (e.target.value = 'js puns') {
-		for (let i = 0; i < 3; i++) {
-	  	defaultMessage.remove();
-	  	colorOptions[i].hidden = false;
-  	}
-	} else if (e.target.value = 'heart js') {
-			for (let i = 0; i >= 3; i++) {
-		  	defaultMessage.remove();
-		  	colorOptions[i].hidden = false;
-	  	}
-	} else {
-			for (let i = 0; i < colorOptions.length; i++) {
-		  	defaultMessage.hidden = false;
-		  	colorOptions[i].hidden = true;
-	  	}
+
+	for (let i = 0; i < colorOptions.length; i++) {
+		if (e.target.value === 'js puns') {
+	  		colorOptions[0].selected = true;
+	  		colorOptions[0].hidden = false;
+	  		colorOptions[1].hidden = false;
+	  		colorOptions[2].hidden = false;
+	  		colorOptions[3].hidden = true;
+	  		colorOptions[4].hidden = true;
+	  		colorOptions[5].hidden = true;
+		} else if (e.target.value === 'heart js') {
+	  		colorOptions[3].selected = true;
+	  		colorOptions[0].hidden = true;
+	  		colorOptions[1].hidden = true;
+	  		colorOptions[2].hidden = true;
+	  		colorOptions[3].hidden = false;
+	  		colorOptions[4].hidden = false;
+	  		colorOptions[5].hidden = false;
+		} else {
+			  	defaultMessage.selected = true;
+			  	colorOptions[i].hidden = true;
+		}
 	}
 });
+
+
+
+/*****
+Register for Activities Section
+*****/
+
+const activitySection = document.querySelector('.activities');
+const activityChoices = document.querySelectorAll('.activities input');
+let totalCostValue = 0;
+const totalCost = document.createElement('h3');
+activitySection.appendChild(totalCost);
+
+activitySection.addEventListener('change', (e) => {
+	let clicked = e.target;
+	let clickedTime = clicked.getAttribute('data-day-and-time');
+	for (let i = 0; i < activityChoices.length; i++) {
+		const checkboxTime = activityChoices[i].getAttribute('data-day-and-time');
+		if (clickedTime === checkboxTime && clicked !== activityChoices[i]) {
+			if (clicked.checked) {
+        activityChoices[i].disabled = true;
+      } else {
+        activityChoices[i].disabled = false;
+      }
+		}
+	}
+	let clickedCost = parseInt(clicked.getAttribute('data-cost'));
+	if (clicked.checked === true) {
+		totalCostValue += clickedCost;
+	} else {
+		totalCostValue -= clickedCost;
+	}
+	totalCost.textContent = `Total: $${totalCostValue}`;
+});
+
+
+
+/*****
+Payment Info Section
+*****/
+
+const paymentElement = document.querySelector('#payment');
+const paymentMethods = document.querySelectorAll('#payment option');
+const defaultChoice = document.querySelector('option[value="select method"]');
+const creditCard = document.querySelector('#credit-card');
+const paypal = document.querySelector('#paypal');
+const bitcoin = document.querySelector('#bitcoin');
+defaultChoice.remove();
+creditCard.selected = true;
+paypal.hidden = true;
+bitcoin.hidden = true;
+
+paymentElement.addEventListener('change', (e) => {
+	if (e.target.value === 'credit card') {
+		creditCard.hidden = false;
+		paypal.hidden = true;
+		bitcoin.hidden = true;
+	} else if (e.target.value === 'paypal') {
+		paypal.hidden = false;
+		creditCard.hidden = true;
+		bitcoin.hidden = true;
+	} else {
+		bitcoin.hidden = false;
+		creditCard.hidden = true;
+		paypal.hidden = true;
+	}
+});
+
+
+
+/*****
+Form Validation
+*****/
 
