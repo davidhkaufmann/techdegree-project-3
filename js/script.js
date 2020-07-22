@@ -141,3 +141,17 @@ paymentElement.addEventListener('change', (e) => {
 Form Validation
 *****/
 
+name = document.querySelector('#name');
+
+const nameValidator = () => {
+	let nameValue = name.value;
+	if (nameValue.length > 0) {
+		name.style.borderColor = 'white';
+		return true;
+	} else {
+		name.style.borderColor = 'red';
+		return false;
+	}
+}
+
+name.addEventListener('keyup', nameValidator);
