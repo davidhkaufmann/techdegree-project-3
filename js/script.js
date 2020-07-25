@@ -3,9 +3,9 @@
 Job Role Dropdown
 *****/
 
-const jobRoleElement = document.querySelector('#title'); //
-const textBox = document.querySelector('#other-title');
-textBox.hidden = true;
+const jobRoleElement = document.querySelector('#title'); 
+const textBox = document.querySelector('#other-title'); //creating the textbox for the "other" job title
+textBox.hidden = true; //hide the textbox until the "other" job title is selected
 
 jobRoleElement.addEventListener('change', (e) => {
 	if (e.target.value == 'other') {
@@ -21,31 +21,15 @@ jobRoleElement.addEventListener('change', (e) => {
 T-Shirt Info Section
 *****/
 
+//declaring variables in the t-shirt section
 const designElement = document.querySelector('#design');
 const designOptions = document.querySelectorAll('#design option');
 const colorDiv = document.querySelector('#colors-js-puns');
-colorDiv.hidden = true;
+colorDiv.hidden = true; //hide the color div until a theme is selected
 const colorElement = document.querySelector('#color');
 const colorOptions = document.querySelectorAll('#color option');
 
-
-const defaultMessage = document.createElement('option');
-defaultMessage.textContent = 'Please select a T-shirt theme';
-defaultMessage.selected = true;
-colorElement.insertBefore(defaultMessage, colorElement.firstElementChild);
-
-
-if (defaultMessage.hidden === false) {
-  colorElement.hidden = false;
-  for (let i = 0; i < colorOptions.length; i++) {
-  	defaultMessage.hidden = true;
-  	colorOptions[i].hidden = true;
-  }
-}
-
-
 designElement.addEventListener('change', (e) => {
-
 	for (let i = 0; i < colorOptions.length; i++) {
 		if (e.target.value === 'js puns') {
 	  		colorDiv.hidden = false;
@@ -76,31 +60,31 @@ designElement.addEventListener('change', (e) => {
 /*****
 Register for Activities Section
 *****/
-
+//declaring variables in the activities section
 const activitySection = document.querySelector('.activities');
 const activityChoices = document.querySelectorAll('label input');
-let totalCostValue = 0;
+let totalCostValue = 0; //the initial cost if attending 0 activities
 const totalCost = document.createElement('h3');
 activitySection.appendChild(totalCost);
 
 activitySection.addEventListener('change', (e) => {
 	let clicked = e.target;
-	let clickedTime = clicked.getAttribute('data-day-and-time');
+	let clickedTime = clicked.getAttribute('data-day-and-time'); //finding the day and time of the clicked activity
 	for (let i = 0; i < activityChoices.length; i++) {
 		const checkboxTime = activityChoices[i].getAttribute('data-day-and-time');
 		if (clickedTime === checkboxTime && clicked !== activityChoices[i]) {
 			if (clicked.checked) {
-        activityChoices[i].disabled = true;
+        activityChoices[i].disabled = true; //block the user from selecting an activity with the same date and time
       } else {
         activityChoices[i].disabled = false;
       }
 		}
 	}
-	let clickedCost = parseInt(clicked.getAttribute('data-cost'));
+	let clickedCost = parseInt(clicked.getAttribute('data-cost')); //change the costs to numerical values
 	if (clicked.checked === true) {
-		totalCostValue += clickedCost;
+		totalCostValue += clickedCost; //add the cost of the selected activity to the totalCostValue variable
 	} else {
-		totalCostValue -= clickedCost;
+		totalCostValue -= clickedCost; //subtract the cost of the deselected activity to the totalCostValue variable
 	}
 	totalCost.textContent = `Total: $${totalCostValue}`;
 });
@@ -111,6 +95,7 @@ activitySection.addEventListener('change', (e) => {
 Payment Info Section
 *****/
 
+//declaring variables in the payment info section
 const paymentElement = document.querySelector('#payment');
 const paymentMethods = document.querySelectorAll('#payment option');
 const defaultChoice = document.querySelector('option[value="select method"]');
@@ -147,31 +132,32 @@ Name Validation
 const name = document.querySelector('#name');
 const nameLabel = document.querySelector('label[for="name"]');
 const nameErrorMessage = document.createElement('h4');
-const nameSuccessMessage = document.createElement('h4');
-nameErrorMessage.innerHTML = 'Uh oh. Looks like we need a name.';
-nameSuccessMessage.innerHTML = 'It\'s looking good!';
+nameErrorMessage.innerHTML = 'Please enter your name';
+nameErrorMessage.style.color = 'blue';
 nameErrorMessage.style.margin = '10px 0 0 0';
-nameSuccessMessage.style.margin = '10px 0 0 0';
-nameErrorMessage.hidden = true;
-nameSuccessMessage.hidden = true;
+nameErrorMessage.hidden = false;
 nameLabel.appendChild(nameErrorMessage);
-nameLabel.appendChild(nameSuccessMessage);
 
 const nameValidator = () => {
 	let nameValue = name.value;
 	const nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[ a-zA-Z]*)*$/;
-	if (nameRegex.test(nameValue) === true) {
-		name.style.border = '';
-		nameErrorMessage.hidden = true;
-		nameSuccessMessage.hidden = false;
-		return true;
-	} else {
-		name.style.border = '2.5px solid red';
-		nameErrorMessage.style.color = 'red';
-		nameErrorMessage.hidden = false;
-		nameSuccessMessage.hidden = true;
-		return false;
-	}
+	if (nameValue.length === 0) {
+    name.style.border = '';
+    nameErrorMessage.innerHTML = 'Please enter your name';
+    nameErrorMessage.style.color = 'blue';
+  	nameErrorMessage.hidden = false;
+  	return false;
+  } else if (nameValue.length > 0 && nameRegex.test(nameValue) === false) {
+  	name.style.border = '2.5px solid red';
+    nameErrorMessage.innerHTML = 'Please enter a valid name';
+    nameErrorMessage.style.color = 'red';
+  	nameErrorMessage.hidden = false;
+  	return false;
+  } else {
+  	name.style.border = '';
+    nameErrorMessage.hidden = true;
+    return true;
+  }
 }
 
 name.addEventListener('keyup', nameValidator);
@@ -185,31 +171,31 @@ Email Validation
 const email = document.querySelector('#mail');
 const emailLabel = document.querySelector('label[for="mail"]');
 const emailErrorMessage = document.createElement('h4');
-const emailSuccessMessage = document.createElement('h4');
-emailErrorMessage.innerHTML = 'That email isn\'t looking quite right. Try again.';
-emailSuccessMessage.innerHTML = 'That looks much better. Thanks!';
+emailErrorMessage.innerHTML = 'Please enter your email address';
+emailErrorMessage.style.color = 'blue';
 emailErrorMessage.style.margin = '10px 0 0 0';
-emailSuccessMessage.style.margin = '10px 0 0 0';
-emailErrorMessage.hidden = true;
-emailSuccessMessage.hidden = true;
+emailErrorMessage.hidden = false;
 emailLabel.appendChild(emailErrorMessage);
-emailLabel.appendChild(emailSuccessMessage);
 
 const emailValidator = () => {
-  let emailValue = email.value;
-  const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  if (emailRegex.test(emailValue) === true) {
+ 	let emailValue = email.value;
+ 	const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if (emailValue.length === 0) {
     email.style.border = '';
-    emailErrorMessage.style.color = 'white';
-    emailErrorMessage.hidden = true;
-    emailSuccessMessage.hidden = false;
-    return true;
-  } else {
-    email.style.border = '2.5px solid red';
+    emailErrorMessage.innerHTML = 'Please enter your email address';
+    emailErrorMessage.style.color = 'blue';
+  	emailErrorMessage.hidden = false;
+  	return false;
+  } else if (emailValue.length > 0 && emailRegex.test(emailValue) === false) {
+  	email.style.border = '2.5px solid red';
+    emailErrorMessage.innerHTML = 'Please enter a valid email address';
     emailErrorMessage.style.color = 'red';
   	emailErrorMessage.hidden = false;
-  	emailSuccessMessage.hidden = true;
   	return false;
+  } else {
+  	email.style.border = '';
+    emailErrorMessage.hidden = true;
+    return true;
   }
 }
 
@@ -328,13 +314,21 @@ Prevent form submission if one the validators is invalid
 const form = document.querySelector('form');
 
 form.addEventListener('submit', (e) => {
-  
+	
   if (!nameValidator()) {
     e.preventDefault();
+    name.style.border = '2.5px solid red';
+  	nameErrorMessage.innerHTML = 'Please enter a valid name';
+  	nameErrorMessage.style.color = 'red';
+  	nameErrorMessage.hidden = false;
   }
 
   if (!emailValidator()) {
     e.preventDefault();
+    email.style.border = '2.5px solid red';
+  	emailErrorMessage.innerHTML = 'Please enter a valid email address';
+  	emailErrorMessage.style.color = 'red';
+  	emailErrorMessage.hidden = false;
   }
 
   if (!activityValidator()) {
