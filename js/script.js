@@ -235,11 +235,13 @@ Payment Validation
 *****/
 
 //Credit Card Number Validation
+const cardNumberDiv = document.querySelector('#credit-card').children[0];
 const cardNumberInput = document.querySelector('#cc-num');
-const cardNumberErrorMessage = document.createElement('h5');
+const cardNumberErrorMessage = document.createElement('h4');
 cardNumberErrorMessage.innerHTML = 'The card number must be between 13 and 16 digits long';
+cardNumberErrorMessage.style.marginTop = '0px';
 cardNumberErrorMessage.hidden = true;
-creditCard.appendChild(cardNumberErrorMessage);
+cardNumberDiv.appendChild(cardNumberErrorMessage);
 
 const creditCardNumberValidator = () => {
 	let cardValue = /^\d{13,16}$/;
@@ -259,11 +261,13 @@ cardNumberInput.addEventListener('keyup', creditCardNumberValidator);
 
 
 //Zip Code Validation
+const zipCodeDiv = document.querySelector('#credit-card').children[1];
 const zipCodeInput = document.querySelector('#zip');
-const zipCodeErrorMessage = document.createElement('h5');
+const zipCodeErrorMessage = document.createElement('h4');
 zipCodeErrorMessage.innerHTML = 'The zip code must be 5 digits long';
+zipCodeErrorMessage.style.marginTop = '0px';
 zipCodeErrorMessage.hidden = true;
-creditCard.appendChild(zipCodeErrorMessage);
+zipCodeDiv.appendChild(zipCodeErrorMessage);
 
 const zipCodeValidator = () => {
 	let zipCodeValue = /^\d{5}$/;
@@ -283,11 +287,13 @@ zipCodeInput.addEventListener('keyup', zipCodeValidator);
 
 
 //CVV Validation
+const cvvDiv = document.querySelector('#credit-card').children[2];
 const cvvInput = document.querySelector('#cvv');
-const cvvErrorMessage = document.createElement('h5');
-cvvErrorMessage.innerHTML = 'The CVV number must be 3 digits long';
+const cvvErrorMessage = document.createElement('h4');
+cvvErrorMessage.innerHTML = 'The CVV must be 3 digits long';
+cvvErrorMessage.style.marginTop = '0px';
 cvvErrorMessage.hidden = true;
-creditCard.appendChild(cvvErrorMessage);
+cvvDiv.appendChild(cvvErrorMessage);
 
 const cvvValidator = () => {
 	let cvvValue = /^\d{3}$/;
@@ -314,7 +320,7 @@ Prevent form submission if one the validators is invalid
 const form = document.querySelector('form');
 
 form.addEventListener('submit', (e) => {
-	
+
   if (!nameValidator()) {
     e.preventDefault();
     name.style.border = '2.5px solid red';
