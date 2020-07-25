@@ -244,18 +244,26 @@ cardNumberErrorMessage.hidden = true;
 cardNumberDiv.appendChild(cardNumberErrorMessage);
 
 const creditCardNumberValidator = () => {
-	let cardValue = /^\d{13,16}$/;
-	if (cardValue.test(cardNumberInput.value) === true) {
-		cardNumberInput.style.border = '';
-		cardNumberErrorMessage.hidden = true;
-		return true;
-	} else {
-		cardNumberInput.style.border = '2.5px solid red';
-		cardNumberErrorMessage.style.color = 'red';
-		cardNumberErrorMessage.hidden = false;
-		return false;
-	}
+ 	let cardNumberValue = cardNumberInput.value;
+ 	let cardNumberRegex = /^\d{13,16}$/;
+  if (cardNumberValue.length === 0) {
+    cardNumberInput.style.border = '';
+    cardNumberErrorMessage.innerHTML = '';
+  	cardNumberErrorMessage.hidden = true;
+  	return false;
+  } else if (cardNumberValue.length > 0 && cardNumberRegex.test(cardNumberValue) === false) {
+  	cardNumberInput.style.border = '2.5px solid red';
+    cardNumberErrorMessage.innerHTML = 'The card number must be between 13 and 16 digits long';
+    cardNumberErrorMessage.style.color = 'red';
+  	cardNumberErrorMessage.hidden = false;
+  	return false;
+  } else {
+  	cardNumberInput.style.border = '';
+    cardNumberErrorMessage.hidden = true;
+    return true;
+  }
 }
+
 
 cardNumberInput.addEventListener('keyup', creditCardNumberValidator);
 
@@ -270,17 +278,24 @@ zipCodeErrorMessage.hidden = true;
 zipCodeDiv.appendChild(zipCodeErrorMessage);
 
 const zipCodeValidator = () => {
-	let zipCodeValue = /^\d{5}$/;
-	if (zipCodeValue.test(zipCodeInput.value) === true) {
-		zipCodeInput.style.border = '';
-		zipCodeErrorMessage.hidden = true;
-		return true;
-	} else {
-		zipCodeInput.style.border = '2.5px solid red';
-		zipCodeErrorMessage.style.color = 'red';
-		zipCodeErrorMessage.hidden = false;
-		return false;
-	}
+ 	let zipCodeValue = zipCodeInput.value;
+ 	let zipCodeRegex = /^\d{5}$/;
+  if (zipCodeValue.length === 0) {
+    zipCodeInput.style.border = '';
+    zipCodeErrorMessage.innerHTML = '';
+  	zipCodeErrorMessage.hidden = true;
+  	return false;
+  } else if (zipCodeValue.length > 0 && zipCodeRegex.test(zipCodeValue) === false) {
+  	zipCodeInput.style.border = '2.5px solid red';
+    zipCodeErrorMessage.innerHTML = 'The zip code must be 5 digits long';
+    zipCodeErrorMessage.style.color = 'red';
+  	zipCodeErrorMessage.hidden = false;
+  	return false;
+  } else {
+  	zipCodeInput.style.border = '';
+    zipCodeErrorMessage.hidden = true;
+    return true;
+  }
 }
 
 zipCodeInput.addEventListener('keyup', zipCodeValidator);
@@ -296,17 +311,24 @@ cvvErrorMessage.hidden = true;
 cvvDiv.appendChild(cvvErrorMessage);
 
 const cvvValidator = () => {
-	let cvvValue = /^\d{3}$/;
-	if (cvvValue.test(cvvInput.value) === true) {
-		cvvInput.style.border = '';
-		cvvErrorMessage.hidden = true;
-		return true;
-	} else {
-		cvvInput.style.border = '2.5px solid red';
-		cvvErrorMessage.style.color = 'red';
-		cvvErrorMessage.hidden = false;
-		return false;
-	}
+ 	let cvvValue = zipCodeInput.value;
+ 	let cvvRegex = /^\d{3}$/;
+  if (cvvValue.length === 0) {
+    cvvInput.style.border = '';
+    cvvErrorMessage.innerHTML = '';
+  	cvvErrorMessage.hidden = true;
+  	return false;
+  } else if (cvvValue.length > 0 && cvvRegex.test(cvvValue) === false) {
+  	cvvInput.style.border = '2.5px solid red';
+    cvvErrorMessage.innerHTML = 'The CVV must be 3 digits long';
+    cvvErrorMessage.style.color = 'red';
+  	cvvErrorMessage.hidden = false;
+  	return false;
+  } else {
+  	cvvInput.style.border = '';
+    cvvErrorMessage.hidden = true;
+    return true;
+  }
 }
 
 cvvInput.addEventListener('keyup', cvvValidator);
@@ -344,14 +366,26 @@ form.addEventListener('submit', (e) => {
   if (paymentElement.value === 'credit card') {
   	if (!creditCardNumberValidator()) {
 	    e.preventDefault();
+	    cardNumberInput.style.border = '2.5px solid red';
+	  	cardNumberErrorMessage.innerHTML = 'The card number must be between 13 and 16 digits long';
+	  	cardNumberErrorMessage.style.color = 'red';
+	  	cardNumberErrorMessage.hidden = false;
 	  }
 
 	  if (!zipCodeValidator()) {
 	    e.preventDefault();
+	    zipCodeInput.style.border = '2.5px solid red';
+	  	zipCodeErrorMessage.innerHTML = 'The zip code must be 5 digits long';
+	  	zipCodeErrorMessage.style.color = 'red';
+	  	zipCodeErrorMessage.hidden = false;
 	  }
 
 	  if (!cvvValidator()) {
 	    e.preventDefault();
+	    cvvInput.style.border = '2.5px solid red';
+	  	cvvErrorMessage.innerHTML = 'The CVV must be 3 digits long';
+	  	cvvErrorMessage.style.color = 'red';
+	  	cvvErrorMessage.hidden = false;
 	  }
   }
 
