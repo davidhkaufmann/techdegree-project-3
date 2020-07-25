@@ -147,10 +147,15 @@ Name Validation
 const name = document.querySelector('#name');
 const nameLabel = document.querySelector('label[for="name"]');
 const nameErrorMessage = document.createElement('h4');
-nameErrorMessage.innerHTML = 'This field can not be blank';
+const nameSuccessMessage = document.createElement('h4');
+nameErrorMessage.innerHTML = 'Uh oh. Looks like we need a name.';
+nameSuccessMessage.innerHTML = 'It\'s looking good!';
 nameErrorMessage.style.margin = '10px 0 0 0';
+nameSuccessMessage.style.margin = '10px 0 0 0';
 nameErrorMessage.hidden = true;
+nameSuccessMessage.hidden = true;
 nameLabel.appendChild(nameErrorMessage);
+nameLabel.appendChild(nameSuccessMessage);
 
 const nameValidator = () => {
 	let nameValue = name.value;
@@ -158,10 +163,14 @@ const nameValidator = () => {
 	if (nameRegex.test(nameValue) === true) {
 		name.style.border = '';
 		nameErrorMessage.hidden = true;
+		nameSuccessMessage.hidden = false;
+		return true;
 	} else {
 		name.style.border = '2.5px solid red';
 		nameErrorMessage.style.color = 'red';
 		nameErrorMessage.hidden = false;
+		nameSuccessMessage.hidden = true;
+		return false;
 	}
 }
 
@@ -176,10 +185,15 @@ Email Validation
 const email = document.querySelector('#mail');
 const emailLabel = document.querySelector('label[for="mail"]');
 const emailErrorMessage = document.createElement('h4');
-emailErrorMessage.innerHTML = 'Please enter a valid email address';
+const emailSuccessMessage = document.createElement('h4');
+emailErrorMessage.innerHTML = 'That email isn\'t looking quite right. Try again.';
+emailSuccessMessage.innerHTML = 'That looks much better. Thanks!';
 emailErrorMessage.style.margin = '10px 0 0 0';
+emailSuccessMessage.style.margin = '10px 0 0 0';
 emailErrorMessage.hidden = true;
+emailSuccessMessage.hidden = true;
 emailLabel.appendChild(emailErrorMessage);
+emailLabel.appendChild(emailSuccessMessage);
 
 const emailValidator = () => {
   let emailValue = email.value;
@@ -188,10 +202,14 @@ const emailValidator = () => {
     email.style.border = '';
     emailErrorMessage.style.color = 'white';
     emailErrorMessage.hidden = true;
+    emailSuccessMessage.hidden = false;
+    return true;
   } else {
     email.style.border = '2.5px solid red';
     emailErrorMessage.style.color = 'red';
   	emailErrorMessage.hidden = false;
+  	emailSuccessMessage.hidden = true;
+  	return false;
   }
 }
 
