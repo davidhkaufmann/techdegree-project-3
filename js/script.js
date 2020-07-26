@@ -34,18 +34,22 @@ designElement.addEventListener('change', (e) => {
 		if (e.target.value === 'js puns') {
 	  		colorDiv.hidden = false;
 	  		colorOptions[0].selected = true;
+	  		//show the colors that are only available for the "js puns" theme
 	  		colorOptions[0].hidden = false;
 	  		colorOptions[1].hidden = false;
 	  		colorOptions[2].hidden = false;
+	  		//hide the colors that are only available for the "I love js" theme
 	  		colorOptions[3].hidden = true;
 	  		colorOptions[4].hidden = true;
 	  		colorOptions[5].hidden = true;
 		} else if (e.target.value === 'heart js') {
 	  		colorDiv.hidden = false;
 	  		colorOptions[3].selected = true;
+	  		//hide the colors that are only available for the "js puns" theme
 	  		colorOptions[0].hidden = true;
 	  		colorOptions[1].hidden = true;
 	  		colorOptions[2].hidden = true;
+	  		//show the colors that are only available for the "I love js" theme
 	  		colorOptions[3].hidden = false;
 	  		colorOptions[4].hidden = false;
 	  		colorOptions[5].hidden = false;
